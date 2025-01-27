@@ -1,0 +1,36 @@
+testy:
+- stacjonarność:
+	test adfuller statsmodels
+	Statystyka testowa = -5.571, p-Value = 0.0 => Stationary.
+
+- niezależność
+	test ljunga-boxa: acorr_ljungbox dla lagu 10 z statsmodels
+----------- dla model3.resids -------- 
+	      lb_stat     lb_pvalue
+	10  9.30411    0.503506 
+	Czy reszty są niezależne? p_value > 0.05, więc tak.
+----------- dla X3 -------- 
+	      lb_stat     lb_pvalue
+	10  97.806128  1.496375e-16 
+	Czy reszty są niezależne? p_value > 0.05, więc tak.
+(tu nie jestem pewna czy mamy działać na tym resids3 czy na X3 
+i czemu to nie jest to samo
+
+- normalność
+	shapiro ze scipy.stats
+	ShapiroResult(statistic=0.9958302974700928, pvalue=0.23462893068790436)
+
+- średnia i wariancja dla zdekomponowanych danych (X3)
+	np.mean(X3) = 0.0007688935697969394, np.var(X3) = 0.7785840911837721
+	średnia bliska 0
+	* t-test: ttest_1samp z scipy.stats, h0: mu = 0
+		t-statistic: 0.019071340621541755, p-value: 0.9847921354320044
+		Brak podstaw do odrzucenia hipotezy zerowej. 
+		Średnia nie różni się istotnie od wartości oczekiwanej.
+	* arch test: het_arch z statsmodels
+		Lagrange Multiplier Test Statistic: 16.76695795645801
+		LM Test p-value: 0.07968229620638863
+		F-Test Statistic: 1.6980301496365462
+		F-Test p-value: 0.07848236817609255
+		Brak podstaw do odrzucenia hipotezy zerowej: Brak efektu ARCH.
+
